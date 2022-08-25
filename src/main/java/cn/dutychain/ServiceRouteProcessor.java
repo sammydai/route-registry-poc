@@ -39,11 +39,8 @@ public class ServiceRouteProcessor implements Processor{
 				DirectoryComponent directoryComponent = iterator.next();
 				Map<String, DirectoryComponent> childrenMap = directoryComponent.getChildren();
 				if (fullMatchStrategy.matches(serviceName, routeRule, childrenMap)) {
-					// if (childrenMap.containsKey(serviceName)) {
 					newPatternResult = fullMatchStrategy.matcher(serviceName, routeRule, childrenMap);
-					// DirectoryComponent patternServiceDir = childrenMap.get(serviceName);
 					iterator.remove();
-					// newPatternResult.add(patternServiceDir);
 				} else {
 					iterator.remove();
 				}

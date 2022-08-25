@@ -1,15 +1,9 @@
 package cn;
 
 import cn.contract.Contract;
-import cn.dutychain.AppGroupRouteProcessor;
-import cn.dutychain.ProcessorChain;
-import cn.dutychain.ProtocolRouteProcessor;
-import cn.dutychain.ServiceRouteProcessor;
-import cn.registry.DirectoryComponent;
-import cn.route.RouteObject;
+import cn.dutychain.RouteProcessor;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @Package: cn
@@ -23,16 +17,14 @@ public class RegistryDemo {
 		System.out.println("初始化本地契约");
 		Contract contract = new Contract().initContract();
 		contract.getContractInfo().getRoot().printList();
-		RouteObject routeObject = new RouteObject("route.properties");
-		System.out.println(routeObject);
-		for (String routeRule : routeObject.getRouteRules()) {
-			ProcessorChain processorChain = new ProcessorChain();
-			processorChain.addPatternResult(contract.getContractInfo().getRoot());
-			processorChain.addProcessor(new ServiceRouteProcessor());
-			processorChain.addProcessor(new ProtocolRouteProcessor());
-			processorChain.addProcessor(new AppGroupRouteProcessor());
-			System.out.println("路由规则: "+routeRule+" 进行路由处理……");
-			List<DirectoryComponent> result = processorChain.process(routeRule, contract, processorChain);
-		}
+		RouteProcessor.route(contract);
+
+		//更新注册信息场景
+		System.out.println();
+		System.out.println("==========更新注册信息场景==========");
+		contract.getRegistryObjectsMap().get("visibleRegistryObject").updateRegistryObject();
+		RouteProcessor.route(contract);
 	}
+
+
 }

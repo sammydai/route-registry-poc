@@ -1,5 +1,7 @@
 package cn.registry;
 
+import cn.observer.Subject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import java.util.Set;
  * @Date: 2022/8/12 11:04
  */
 
-public class RegistryObject {
+public class RegistryObject extends Subject {
 
 	private Directory root;
 
@@ -81,12 +83,18 @@ public class RegistryObject {
 				protocolDir = (Directory) tempComponent;
 			}
 			tempComponent = protocolDir.addComponent(appgroupDir);
-			if (tempComponent!=null) {
+			if (tempComponent != null) {
 				appgroupDir = (Directory) tempComponent;
 			}
 			for (File ipFile : ipFiles) {
 				appgroupDir.addComponent(ipFile);
 			}
 		}
+	}
+
+	public void updateRegistryObject() {
+		RegistryObject refreshRegistryObject = new RegistryObject("refresh.properties");
+		System.out.println("更新注册表信息……");
+		super.notifyObserver(refreshRegistryObject);
 	}
 }

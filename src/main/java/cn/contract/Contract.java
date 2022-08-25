@@ -1,5 +1,6 @@
 package cn.contract;
 
+import cn.observer.Observer;
 import cn.registry.Directory;
 import cn.registry.DirectoryComponent;
 import cn.registry.RegistryObject;
@@ -18,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Date: 2022/8/15 11:42
  */
 
-public class Contract {
+public class Contract implements Observer {
 
 	private Map<String, String> registryMap = new HashMap<>();
 
@@ -26,6 +27,7 @@ public class Contract {
 
 	private RegistryObject contractInfo;
 
+	// private Contract contract = new Contract();
 
 	public void addRegistryObject(String name, RegistryObject registryObject) {
 		registryObjectsMap.put(name, registryObject);
@@ -55,10 +57,14 @@ public class Contract {
 		this.contractInfo = contractInfo;
 	}
 
+	public Contract() {
+	}
+
 	/**
 	 * 初始化注册表和契约对象
 	 * 1、解析配置文件成为RegistryObject对象
 	 * 2、初始化Contract契约对象
+	 *
 	 * @return
 	 * @throws IOException
 	 */
@@ -72,6 +78,11 @@ public class Contract {
 		contract.addRegistryObject("usableRegistryObject", usableRegistryObject);
 		contract.handleRegistryObjectsMap(contract.getRegistryObjectsMap());
 		System.out.println("编排注册对象,生成本地契约文件");
+		//如果注册表信息有更新，更新契约文件
+		Observer contractObservable = contract;
+		contract.getRegistryObjectsMap().forEach((k, v) -> {
+			v.addObserver(contractObservable);
+		});
 		return contract;
 	}
 
@@ -125,5 +136,15 @@ public class Contract {
 			result.addComponent(usableRoot);
 		}
 		return result;
+	}
+
+	@Override
+	public void updateContract(RegistryObject refreshRegistryObject) {
+		System.out.println("发现注册表信息有更新……");
+		System.out.println("更新本地契约文件");
+		Directory result = new Directory("root", "root");
+		DirectoryComponent directoryComponent = this.mergeDirectory(refreshRegistryObject.getRoot(), this.contractInfo.getRoot(), result);
+		RegistryObject refreshResult = new RegistryObject((Directory) directoryComponent.getChildren().get("root"));
+		contractInfo = refreshResult;
 	}
 }
