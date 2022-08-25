@@ -3,16 +3,17 @@ package cn.pattern;
 import cn.registry.DirectoryComponent;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Package: cn.dutychain
- * @Description: Pattern Route Rule
+ * @Description: Pattern Strategy 匹配策略
  * @Author: Sammy
  * @Date: 2022/8/24 09:03
  */
 
 public interface PatternStrategy {
-	public boolean pattern(String patternName, String routeRule , List<DirectoryComponent> patternObjects);
+	boolean matches(String patternName, String routeRule, Map<String, DirectoryComponent> patternObjects);
 
-	public List<DirectoryComponent> matcher(String patternName, String routeRule, List<DirectoryComponent> patternObjects);
+	List<DirectoryComponent> matcher(String patternName, String routeRule, Map<String, DirectoryComponent> patternObjects);
 }

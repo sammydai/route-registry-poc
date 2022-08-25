@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * @Package: cn.dutychain
- * @Description: PatternRule
+ * @Package: cn.route
+ * @Description: Route Object 路由对象
  * @Author: Sammy
  * @Date: 2022/8/22 11:52
  */

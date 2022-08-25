@@ -5,27 +5,26 @@ import cn.registry.DirectoryComponent;
 import cn.registry.RegistryObject;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @Package: cn.registry
- * @Description: 缓存的注册表directory模式
+ * @Package: cn.contract
+ * @Description: 本地缓存的契约
  * #mode1能力级别寻址:/<service>/<protocol>/<app.group>
  * #mode2实例寻址: /<app>/<group>/<node>
- * 可能使用composite模式来实现
  * @Author: Sammy
  * @Date: 2022/8/15 11:42
  */
 
-public class Contract implements Observer {
+public class Contract {
 
 	private Map<String, String> registryMap = new HashMap<>();
 
 	private Map<String, RegistryObject> registryObjectsMap = new ConcurrentHashMap<>();
 
 	private RegistryObject contractInfo;
-
 
 
 	public void addRegistryObject(String name, RegistryObject registryObject) {
@@ -127,14 +126,4 @@ public class Contract implements Observer {
 		}
 		return result;
 	}
-
-	/**
-	 * 观察到注册表（配置文件）更新了之后，更新本地缓存注册表
-	 */
-	@Override
-	public void update(Observable o, Object arg) {
-
-	}
-
-
 }

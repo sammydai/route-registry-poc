@@ -2,11 +2,14 @@ package cn.registry;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * @Package: cn.registry
- * @Description: RegistryObject
+ * @Description: Registry Object 注册表结构对象
  * @Author: Sammy
  * @Date: 2022/8/12 11:04
  */
@@ -42,7 +45,8 @@ public class RegistryObject {
 	 * 构建RegistryObject对象
 	 * Directory：/root/service/protocol/app.group/
 	 * File：ip
-	 * @param properties
+	 *
+	 * @param properties 注册表（本地配置文件）
 	 */
 	public void generateRegistryObject(Properties properties){
 		Set<Object> keys = properties.keySet();

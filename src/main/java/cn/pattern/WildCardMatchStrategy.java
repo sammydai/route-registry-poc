@@ -2,28 +2,24 @@ package cn.pattern;
 
 import cn.registry.DirectoryComponent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @Package: cn.matches
- * @Description: Full Match Strategy 全匹配模式
+ * @Description: Wild Card Match Strategy 通配符匹配模式
  * @Author: Sammy
- * @Date: 2022/8/24 09:46
+ * @Date: 2022/8/25 12:50
  */
 
-public class FullMatchStrategy implements PatternStrategy {
+public class WildCardMatchStrategy implements PatternStrategy {
 	@Override
 	public boolean matches(String patternName, String routeRule, Map<String, DirectoryComponent> patternObjects) {
-		return patternObjects.containsKey(patternName);
+		return false;
 	}
 
 	@Override
 	public List<DirectoryComponent> matcher(String patternName, String routeRule, Map<String, DirectoryComponent> patternObjects) {
-		DirectoryComponent directoryComponent = patternObjects.get(patternName);
-		List<DirectoryComponent> result = new ArrayList<>();
-		result.add(directoryComponent);
-		return result;
+		return null;
 	}
 }

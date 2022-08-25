@@ -1,6 +1,7 @@
 package cn.dutychain;
 
 import cn.contract.Contract;
+import cn.pattern.PatternContext;
 import cn.registry.DirectoryComponent;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.Map;
 
 /**
  * @Package: cn.dutychain
- * @Description: Route Processor 路由处理器
+ * @Description: Service Route Processor 路由处理器
  * @Author: Sammy
  * @Date: 2022/8/22 11:57
  */
@@ -29,6 +30,7 @@ public class ServiceRouteProcessor implements Processor{
 		String serviceName = routeRuleArrays[0];
 		List<DirectoryComponent> patternResult = processorChain.getPatternResult();
 		List<DirectoryComponent> newPatternResult = new ArrayList<>();
+		PatternContext fullMatchStrategy = new PatternContext(processorChain.getPatternStrategy("fullMatchStrategy"));
 		if (patternResult.size() == 0) {
 			System.out.println("上一层级没有匹配到,service结束责任链传递");
 		} else {
@@ -36,10 +38,12 @@ public class ServiceRouteProcessor implements Processor{
 			while (iterator.hasNext()) {
 				DirectoryComponent directoryComponent = iterator.next();
 				Map<String, DirectoryComponent> childrenMap = directoryComponent.getChildren();
-				if (childrenMap.containsKey(serviceName)) {
-					DirectoryComponent patternServiceDir = childrenMap.get(serviceName);
+				if (fullMatchStrategy.matches(serviceName, routeRule, childrenMap)) {
+					// if (childrenMap.containsKey(serviceName)) {
+					newPatternResult = fullMatchStrategy.matcher(serviceName, routeRule, childrenMap);
+					// DirectoryComponent patternServiceDir = childrenMap.get(serviceName);
 					iterator.remove();
-					newPatternResult.add(patternServiceDir);
+					// newPatternResult.add(patternServiceDir);
 				} else {
 					iterator.remove();
 				}

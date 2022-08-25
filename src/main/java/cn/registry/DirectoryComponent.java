@@ -4,7 +4,7 @@ import java.util.Map;
 
 /**
  * @Package: cn.registry
- * @Description: Directory Component 注册对象结构
+ * @Description: Directory Component 注册表结构的各节点，使用composite模式来实现
  * @Author: Sammy
  * @Date: 2022/8/13 09:43
  */

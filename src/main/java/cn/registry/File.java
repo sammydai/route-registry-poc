@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @Package: cn.registry
- * @Description: File 叶子节点
+ * @Description: File 注册表结构的叶子节点
  * @Author: Sammy
  * @Date: 2022/8/12 14:13
  */
