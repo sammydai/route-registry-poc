@@ -26,5 +26,4 @@ public class RegistryDemo {
 		RouteProcessor.route(contract);
 	}
 
-
 }

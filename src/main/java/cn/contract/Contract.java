@@ -27,8 +27,6 @@ public class Contract implements Observer {
 
 	private RegistryObject contractInfo;
 
-	// private Contract contract = new Contract();
-
 	public void addRegistryObject(String name, RegistryObject registryObject) {
 		registryObjectsMap.put(name, registryObject);
 	}
@@ -146,5 +144,7 @@ public class Contract implements Observer {
 		DirectoryComponent directoryComponent = this.mergeDirectory(refreshRegistryObject.getRoot(), this.contractInfo.getRoot(), result);
 		RegistryObject refreshResult = new RegistryObject((Directory) directoryComponent.getChildren().get("root"));
 		contractInfo = refreshResult;
+		System.out.println("更新后的契约文件");
+		this.getContractInfo().getRoot().printList();
 	}
 }
